@@ -31,6 +31,7 @@ CentralComponent::CentralComponent()
 	tabs->addTab("Settings", LookAndFeel_V4::getMidnightColourScheme().getUIColour(juce::LookAndFeel_V4::ColourScheme::UIColour::windowBackground), lineSettings, true);
 	addKeyListener(this);
 	addAndMakeVisible(tabs);
+	tabs->setAlwaysOnTop(true);
 }
 
 CentralComponent::~CentralComponent() {
@@ -54,7 +55,7 @@ void CentralComponent::mouseDown(const MouseEvent &event) {
 		return;
 	}
 	LineSettingsState const & state(lineSettings->getDefaultState());
-	lines.push_back(new LineComponent(event.getMouseDownX(), event.getMouseDownY(), state.getLineThickness(), state.getColour(), state.getType()));
+	lines.push_back(new LineComponent(event.getMouseDownX(), event.getMouseDownY(), state.getLineThickness(), state.getColour(), state.getType(), state.getDashedValue1(), state.getDashedValue2()));
 	addAndMakeVisible(lines.back());
 	addIntoTheMemory(std::make_pair(LineSettingsState(false, lines.back()), LineSettingsState(true, lines.back())));
 }
@@ -83,6 +84,8 @@ void CentralComponent::handleDo(LineSettingsState const & fst, LineSettingsState
 		y->setLineThickness(snd.getLineThickness());
 		y->setLineType(snd.getType());
 		y->setColour(snd.getColour());
+		y->setDashedValue1(snd.getDashedValue1());
+		y->setDashedValue2(snd.getDashedValue2());
 	}
 }
 
@@ -136,23 +139,13 @@ void CentralComponent::addIntoTheMemory(const std::pair<LineSettingsState, LineS
 }
 
 bool CentralComponent::keyPressed(const KeyPress &key, Component *c) {
-	if (key.getModifiers().isCtrlDown() && (key.getKeyCode() == 'Z')) {
-		redo();
+	if (key.getModifiers().isCtrlDown() && ((key.getKeyCode() == 'Z') || (key.getKeyCode() == 'z'))) {
+		if (key.getModifiers().isShiftDown())
+			redo();
+		else
+			undo();
 		return true;
 	}
 
-	if (key.getModifiers().isCtrlDown()  && (key.getKeyCode() == 'z')) {
-		undo();
-		return true;
-	}
-	// if (key.getModifiers().isCtrlDown() && (((key.getKeyCode() == 'z') && key.getModifiers().isShiftDown() ) || (key.getKeyCode() == 'Z'))) {
-	//      redo();
-	//      return true;
-	// }
-	//
-	// if (key.getModifiers().isCtrlDown()  && (key.getKeyCode() == 'z')) {
-	//      undo();
-	//      return true;
-	// }
 	return false;
 }

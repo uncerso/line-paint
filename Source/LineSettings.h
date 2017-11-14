@@ -42,7 +42,9 @@ public:
 	                  int type = 0,
 	                  Colour colour = Colours::cornflowerblue,
 	                  Point<int> const &globalPosPoint1 = Point<int>(),
-	                  Point<int> const &globalPosPoint2 = Point<int>()
+	                  Point<int> const &globalPosPoint2 = Point<int>(),
+	                  unsigned int dashedValue1 = 8,
+	                  unsigned int dashedValue2 = 8
 	                  );
 	~LineSettingsState() = default;
 	bool isExist() const;
@@ -53,6 +55,8 @@ public:
 	Point<int> getGlobalPosPoint1() const;
 	Point<int> getGlobalPosPoint2() const;
 	bool operator!=(LineSettingsState const &other) const;
+	unsigned int getDashedValue1() const;
+	unsigned int getDashedValue2() const;
 private:
 	bool exist;
 	LineComponent *ptr;
@@ -61,6 +65,8 @@ private:
 	Colour colour;
 	Point<int> globalPosPoint1;
 	Point<int> globalPosPoint2;
+	unsigned int dashedValue1;
+	unsigned int dashedValue2;
 };
 
 
@@ -84,7 +90,6 @@ public:
 
 	void startChange();
 	void endChange();
-	void change();
 
 	LineSettings();
 	~LineSettings();
@@ -109,6 +114,9 @@ private:
 	TextButton roundedType;
 	TextButton boundBoxType;
 	TextButton deleteLine;
+
+	GroupComponent gpDashedSettings;
+	OwnedArray<CustomSlider> dashedSettings;
 
 	OwnedArray<TextButton> dashedTypeButtons;
 

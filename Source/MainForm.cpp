@@ -12,9 +12,9 @@
 #include "CentralComponent.h"
 
 MainForm::MainForm() : DocumentWindow(
-	        JUCEApplication::getInstance()->getApplicationName(),
-	        Colour::fromRGB(97, 90, 117),
-	        DocumentWindow::allButtons)
+		JUCEApplication::getInstance()->getApplicationName(),
+		Colour::fromRGB(97, 90, 117),
+		DocumentWindow::allButtons)
 {
 	setColour(DocumentWindow::textColourId, Colour::fromRGB(177, 170, 197));
 	centreWithSize((int)(getParentWidth() * 0.9), (int)(getParentHeight() * 0.9));
@@ -22,7 +22,10 @@ MainForm::MainForm() : DocumentWindow(
 	setVisible(true);
 	centralComponent = new CentralComponent();
 	setContentOwned(centralComponent, false);
-	setUsingNativeTitleBar(true);
+	// setUsingNativeTitleBar(true);
+#if JUCE_OPENGL
+	openGLContext.attachTo(*getTopLevelComponent());
+#endif
 }
 
 MainForm::~MainForm() {}

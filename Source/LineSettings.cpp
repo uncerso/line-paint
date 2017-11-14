@@ -67,8 +67,20 @@ LineSettings::LineSettings()
 	}
 	dashedTypeButtons.getUnchecked(0)->setToggleState(true, NotificationType::dontSendNotification);
 
+	for (int i = 0; i < 2; ++i) {
+		CustomSlider *s = dashedSettings.add(new CustomSlider());
+		addAndMakeVisible(s);
+		s->setTextValueSuffix(" px");
+		s->addListener(this);
+		s->addActionListener(this);
+		s->setRange(1, 100, 1);
+		s->setValue(8);
+	}
+
 	addAndMakeVisible(gpType);
 	gpType.setText("Line types\n\n");
+	addAndMakeVisible(gpDashedSettings);
+	gpDashedSettings.setText("Dashed settings\n\n");
 }
 
 LineSettings::~LineSettings() {
@@ -90,16 +102,21 @@ void LineSettings::resized() {
 	lineThickness.setTextBoxStyle(Slider::TextBoxLeft, false, (int)(lineThickness.getWidth() * 0.3), lineThickness.getTextBoxHeight());
 
 	gpType.setBounds(sliderLeft >> 1, proportionOfHeight(0.15f), (getWidth() + width ) >> 1, proportionOfHeight(0.25f));
+	gpDashedSettings.setBounds(sliderLeft >> 1, proportionOfHeight(0.45f), (getWidth() + width ) >> 1, proportionOfHeight(0.2f));
 
 	for (int i = 0; i < dashedTypeButtons.size(); ++i)
 		dashedTypeButtons.getUnchecked(i)->setBounds(sliderLeft + i * (width >> 1), proportionOfHeight(0.2f), (width >> 1), proportionOfHeight(0.05f));
 
+	for (int i = 0; i < dashedSettings.size(); ++i)
+		dashedSettings.getUnchecked(i)->setBounds(sliderLeft, proportionOfHeight(0.5f) + i * proportionOfHeight(0.05f), width, proportionOfHeight(0.05f));
+
 	roundedType.setBounds(sliderLeft,  proportionOfHeight(0.3f), (width >> 1), proportionOfHeight(0.05f));
 	boundBoxType.setBounds(sliderLeft + (width >> 1),  proportionOfHeight(0.3f), (width >> 1), proportionOfHeight(0.05f));
 
-	colourButton.setBounds(sliderLeft,  proportionOfHeight(0.45f), width, proportionOfHeight(0.05f));
+	colourButton.setBounds(sliderLeft,  proportionOfHeight(0.7f), width, proportionOfHeight(0.05f));
 
-	deleteLine.setBounds(sliderLeft,  proportionOfHeight(0.55f), width, proportionOfHeight(0.05f));
+	deleteLine.setBounds(sliderLeft,  proportionOfHeight(0.8f), width, proportionOfHeight(0.05f));
+
 }
 
 void LineSettings::actionListenerCallback(const String &s) {
@@ -128,10 +145,27 @@ void LineSettings::actionListenerCallback(const String &s) {
 }
 
 void LineSettings::sliderValueChanged(Slider *slider) {
-	if (LineComponent::selected)
-		LineComponent::selected->setLineThickness(lineThickness.getValue());
-	else
-		defaultSettings.lineThickness = lineThickness.getValue();
+	if (slider == &lineThickness) {
+		if (LineComponent::selected)
+			LineComponent::selected->setLineThickness(lineThickness.getValue());
+		else
+			defaultSettings.lineThickness = lineThickness.getValue();
+		return;
+	}
+	if (slider == dashedSettings.getUnchecked(0)) {
+		if (LineComponent::selected)
+			LineComponent::selected->setDashedValue1((unsigned int)slider->getValue());
+		else
+			defaultSettings.dashedValue1 = (unsigned int)slider->getValue();
+		return;
+	}
+	if (slider == dashedSettings.getUnchecked(1)) {
+		if (LineComponent::selected)
+			LineComponent::selected->setDashedValue2((unsigned int)slider->getValue());
+		else
+			defaultSettings.dashedValue2 = (unsigned int)slider->getValue();
+		return;
+	}
 }
 
 void LineSettings::handleButtonClick(Button *button) {
@@ -192,6 +226,8 @@ void LineSettings::buttonClicked(Button *button) {
 void LineSettings::update() {
 	if (LineComponent::selected) {
 		lineThickness.setValue(LineComponent::selected->getLineThickness(), NotificationType::dontSendNotification);
+		dashedSettings.getUnchecked(0)->setValue(LineComponent::selected->getDashedValue1(), NotificationType::dontSendNotification);
+		dashedSettings.getUnchecked(1)->setValue(LineComponent::selected->getDashedValue2(), NotificationType::dontSendNotification);
 		int type = LineComponent::selected->getLineType();
 		roundedType.setToggleState(type & LineComponent::LineType::rounded, NotificationType::dontSendNotification);
 		boundBoxType.setToggleState(type & LineComponent::LineType::boundBox, NotificationType::dontSendNotification);
@@ -202,6 +238,8 @@ void LineSettings::update() {
 	}
 	int type = defaultSettings.getType();
 	lineThickness.setValue(defaultSettings.getLineThickness(), NotificationType::dontSendNotification);
+	dashedSettings.getUnchecked(0)->setValue(defaultSettings.getDashedValue1(), NotificationType::dontSendNotification);
+	dashedSettings.getUnchecked(1)->setValue(defaultSettings.getDashedValue2(), NotificationType::dontSendNotification);
 	roundedType.setToggleState(type & LineComponent::LineType::rounded, NotificationType::dontSendNotification);
 	boundBoxType.setToggleState(type & LineComponent::LineType::boundBox, NotificationType::dontSendNotification);
 	dashedTypeButtons.getUnchecked(type & LineComponent::LineType::dashed)->setToggleState(true, NotificationType::dontSendNotification);
@@ -225,21 +263,19 @@ LineSettingsState const& LineSettings::getDefaultState() const {
 void LineSettings::startChange() {
 	if (!LineComponent::selected) return;
 	auto &x(LineComponent::selected);
-	startSettingChange = LineSettingsState(true, x, x->getLineThickness(), x->getLineType(), x->getColour(), x->getPoint1(), x->getPoint2());
+	startSettingChange = LineSettingsState(true, x, x->getLineThickness(), x->getLineType(), x->getColour(), x->getPoint1(), x->getPoint2(), x->getDashedValue1(), x->getDashedValue2());
 }
 
 void LineSettings::endChange() {
 	if (!LineComponent::selected) return;
 	auto &x(LineComponent::selected);
-	LineSettingsState endSettingChange(true, x, x->getLineThickness(), x->getLineType(), x->getColour(), x->getPoint1(), x->getPoint2());
+	LineSettingsState endSettingChange(true, x, x->getLineThickness(), x->getLineType(), x->getColour(), x->getPoint1(), x->getPoint2(), x->getDashedValue1(), x->getDashedValue2());
 	if (startSettingChange != endSettingChange)
 		centralComponent->lineSettingsListener(std::make_pair(startSettingChange, endSettingChange));
 }
 
-void LineSettings::change() {}
-
 //==============================================================================
-LineSettingsState::LineSettingsState(bool exist, LineComponent *ptr, int lineThickness, int type, Colour colour, Point<int> const &globalPosPoint1, Point<int> const &globalPosPoint2)
+LineSettingsState::LineSettingsState(bool exist, LineComponent *ptr, int lineThickness, int type, Colour colour, Point<int> const &globalPosPoint1, Point<int> const &globalPosPoint2, unsigned int dashedValue1, unsigned int dashedValue2)
 	: exist(exist)
 	, ptr(ptr)
 	, lineThickness(lineThickness)
@@ -247,6 +283,8 @@ LineSettingsState::LineSettingsState(bool exist, LineComponent *ptr, int lineThi
 	, colour(colour)
 	, globalPosPoint1(globalPosPoint1)
 	, globalPosPoint2(globalPosPoint2)
+	, dashedValue1(dashedValue1)
+	, dashedValue2(dashedValue2)
 {}
 
 bool LineSettingsState::operator!=(LineSettingsState const &other) const {
@@ -256,7 +294,9 @@ bool LineSettingsState::operator!=(LineSettingsState const &other) const {
 	       ptr != other.ptr ||
 	       lineThickness != other.lineThickness ||
 	       type != other.type ||
-	       colour != other.colour;
+	       colour != other.colour ||
+	       dashedValue1 != other.dashedValue1 ||
+	       dashedValue2 != other.dashedValue2;
 }
 
 bool LineSettingsState::isExist()  const {
@@ -285,4 +325,12 @@ Point<int> LineSettingsState::getGlobalPosPoint1() const {
 
 Point<int> LineSettingsState::getGlobalPosPoint2() const {
 	return globalPosPoint2;
+}
+
+unsigned int LineSettingsState::getDashedValue1() const {
+	return dashedValue1;
+}
+
+unsigned int LineSettingsState::getDashedValue2() const {
+	return dashedValue2;
 }

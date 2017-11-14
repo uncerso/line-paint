@@ -18,8 +18,8 @@ class LineComponent
 {
 	friend LineSettings;
 public:
-	LineComponent(int startX, int startY, int endX, int endY, int lineThickness = 3, Colour colour = Colour::fromRGB(0, 0, 0), int lineType = LineType::solid | LineType::rounded);
-	LineComponent(int x, int y, int lineThickness = 3, Colour colour = Colour::fromRGB(0, 0, 0), int lineType = LineType::solid | LineType::rounded);
+	LineComponent(int startX, int startY, int endX, int endY, int lineThickness = 3, Colour colour = Colour::fromRGB(0, 0, 0), int lineType = LineType::solid | LineType::rounded, unsigned int dashedValue1 = 8, unsigned int dashedValue2 = 8);
+	LineComponent(int x, int y, int lineThickness = 3, Colour colour = Colour::fromRGB(0, 0, 0), int lineType = LineType::solid | LineType::rounded, unsigned int dashedValue1 = 8, unsigned int dashedValue2 = 8);
 	~LineComponent();
 
 	void paint(Graphics &canvas) override;
@@ -45,6 +45,12 @@ public:
 	void setLineType(int type);
 	int getLineType();
 
+	void setDashedValue1(unsigned int value);
+	unsigned int getDashedValue1();
+
+	void setDashedValue2(unsigned int value);
+	unsigned int getDashedValue2();
+
 	void setPos(Point<int> const &p1, Point<int> const &p2);
 	Point<int> getPoint1();
 	Point<int> getPoint2();
@@ -64,6 +70,8 @@ private:
 	bool dragMode;
 	int lineThickness;
 	int type;
+	unsigned int dashedValue1;
+	unsigned int dashedValue2;
 	Colour colour;
 	Point<int> deltaBounds;
 	Point<int> globalFixedPoint;

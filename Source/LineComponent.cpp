@@ -45,11 +45,13 @@ void LineComponent::select(LineComponent *object) {
 	if (lineSettings) lineSettings->update();
 }
 
-LineComponent::LineComponent(int startX, int startY, int endX, int endY, int lineThickness, Colour colour, int lineType)
+LineComponent::LineComponent(int startX, int startY, int endX, int endY, int lineThickness, Colour colour, int lineType, unsigned int dashedValue1, unsigned int dashedValue2)
 	: Component("Line")
 	, dragMode(false)
 	, lineThickness(lineThickness)
 	, type(lineType)
+	, dashedValue1(dashedValue1)
+	, dashedValue2(dashedValue2)
 	, colour(colour)
 	//, deltaBounds(lineThickness, lineThickness)
 	, deltaBounds((lineThickness + 1) >> 1, (lineThickness + 1) >> 1 )
@@ -62,11 +64,13 @@ LineComponent::LineComponent(int startX, int startY, int endX, int endY, int lin
 	setBounds(minX - deltaBounds.getX(), minY - deltaBounds.getY(), std::abs(endX - startX) + deltaBounds.getX() * 2, std::abs(endY - startY) + deltaBounds.getY() * 2);
 }
 
-LineComponent::LineComponent(int x, int y, int lineThickness, Colour colour, int lineType)
+LineComponent::LineComponent(int x, int y, int lineThickness, Colour colour, int lineType, unsigned int dashedValue1, unsigned int dashedValue2)
 	: Component("Line")
 	, dragMode(false)
 	, lineThickness(lineThickness)
 	, type(lineType)
+	, dashedValue1(dashedValue1)
+	, dashedValue2(dashedValue2)
 	, colour(colour)
 	//, deltaBounds(lineThickness, lineThickness)
 	, deltaBounds((lineThickness + 1) >> 1, (lineThickness + 1) >> 1 )
@@ -85,7 +89,7 @@ void LineComponent::paint(Graphics &canvas) {
 		canvas.drawRect(0, 0, getWidth(), getHeight());
 	canvas.setColour(colour);
 	if (type & LineType::dashed) {
-		float tmp[] {8, 8};
+		float tmp[] {(float)dashedValue1, (float)dashedValue2};
 		canvas.drawDashedLine(Line<float>(point1.toFloat(), point2.toFloat()), tmp, 2, (float)lineThickness);
 	}
 	else
@@ -128,7 +132,6 @@ void LineComponent::mouseDown(const MouseEvent &event) {
 }
 
 void LineComponent::mouseDrag(const MouseEvent &event) {
-	lineSettings->change();
 	if (dragMode) {
 		dragger.dragComponent(this, event, &constrainer);
 		return;
@@ -175,6 +178,24 @@ void LineComponent::setPos(Point<int> const &p1, Point<int> const &p2) {
 	point1 = p1 - getPosition();
 	point2 = p2 - getPosition();
 	repaint();
+}
+
+void LineComponent::setDashedValue1(unsigned int value) {
+	dashedValue1 = value;
+	repaint();
+}
+
+unsigned int LineComponent::getDashedValue1() {
+	return dashedValue1;
+}
+
+void LineComponent::setDashedValue2(unsigned int value) {
+	dashedValue2 = value;
+	repaint();
+}
+
+unsigned int LineComponent::getDashedValue2() {
+	return dashedValue2;
 }
 
 Point<int> LineComponent::getPoint1() {
