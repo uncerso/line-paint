@@ -40,7 +40,7 @@ public:
 	                  LineComponent *ptr = nullptr,
 	                  int lineThickness = 0,
 	                  int type = 0,
-	                  Colour colour = Colours::cornflowerblue,
+	                  Colour colour = Colour::fromRGB(45, 91, 129),
 	                  Point<int> const &globalPosPoint1 = Point<int>(),
 	                  Point<int> const &globalPosPoint2 = Point<int>(),
 	                  unsigned int dashedValue1 = 8,

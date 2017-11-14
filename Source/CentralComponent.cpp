@@ -146,6 +146,13 @@ bool CentralComponent::keyPressed(const KeyPress &key, Component *c) {
 			undo();
 		return true;
 	}
-
+	if (key.getKeyCode() == key.deleteKey) {
+		lineSettings->deleteCurrentLine();
+		return true;
+	}
+	if (key.getKeyCode() == key.escapeKey) {
+		LineComponent::select(nullptr);
+		return true;
+	}
 	return false;
 }

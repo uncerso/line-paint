@@ -14,7 +14,7 @@
 
 LineSettings::LineSettings()
 	: Component("LineSettings")
-	, defaultSettings(true, nullptr, 10, LineComponent::LineType::rounded, Colours::cornflowerblue)
+	, defaultSettings(true, nullptr, 10, LineComponent::LineType::rounded)
 {
 	laf.setColourScheme(LookAndFeel_V4::getMidnightColourScheme());
 	setLookAndFeel(&laf);
@@ -252,6 +252,7 @@ void LineSettings::selectListener(CentralComponent *centralComponent) {
 }
 
 void LineSettings::deleteCurrentLine() {
+	if (!LineComponent::selected) return;
 	centralComponent->lineSettingsListener(std::make_pair(LineSettingsState(true, LineComponent::selected), LineSettingsState(false, LineComponent::selected)));
 	LineComponent::select(nullptr);
 }
