@@ -13,11 +13,13 @@
 
 class CentralComponent;
 
+/// Creates a window and sets its look
 class MainForm : public DocumentWindow {
 public:
 	MainForm();
 	~MainForm();
 
+	/// This method is called when the user tries to close the window
 	void closeButtonPressed() override;
 
 private:

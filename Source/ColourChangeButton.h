@@ -11,6 +11,7 @@
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
 
+/// Button to change colour
 class ColourChangeButton
 	: public TextButton
 	, public ActionBroadcaster
@@ -39,6 +40,7 @@ public:
 
 	void changeListenerCallback(ChangeBroadcaster* source) override;
 
+	/// Sends message about its death to its listeners
 	void deadOfColourSelector();
 
 };

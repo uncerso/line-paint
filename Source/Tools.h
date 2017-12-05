@@ -16,6 +16,7 @@
 
 class CentralComponent;
 
+/// Manages undo/redo and backgroung colour change events
 class Tools
 	: public Component
 	, public Button::Listener
@@ -28,6 +29,7 @@ public:
 	void resized() override;
 	void buttonClicked(Button *button) override;
 
+	/// Returns selected background colour
 	Colour getColour() noexcept;
 	void actionListenerCallback(const String &s) override;
 

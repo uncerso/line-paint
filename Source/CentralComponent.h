@@ -19,6 +19,7 @@ class Tools;
 class LineSettings;
 class LineSettingsState;
 
+/// Application logic
 class CentralComponent
 	: public Component
 	, public KeyListener
@@ -35,11 +36,14 @@ public:
 	void mouseDown(const MouseEvent &event) override;
 	void mouseDrag(const MouseEvent &event) override;
 
+	/// Gets events from LineSettings (I know this is an antipattern)
 	void lineSettingsListener(const std::pair<LineSettingsState, LineSettingsState> &event);
 
 	void actionListenerCallback(const String &s) override;
 
+	/// Undo
 	void undo();
+	/// Redo
 	void redo();
 private:
 

@@ -13,6 +13,7 @@
 
 class LineSettings;
 
+/// Lines themselves
 class LineComponent
 	: public Component
 {
@@ -24,33 +25,38 @@ public:
 
 	void paint(Graphics &canvas) override;
 
-	void mouseMove(const MouseEvent &events) override {
-		repaint();
-	}
 
 	void mouseDown(const MouseEvent &event) override;
 	void mouseUp(const MouseEvent &event) override;
 	void mouseDrag(const MouseEvent &event) override;
 	bool hitTest(int x, int y) override;
 
+	/// Selects a line
 	static void select(LineComponent *object);
+	/// Unselects a line
 	static void selectNullptrIfSelected(LineComponent *object);
 
+	/// Sets line thickness
 	void setLineThickness(int lineThickness);
 	int getLineThickness();
 
+	/// Sets line colour
 	void setColour(Colour colour);
 	Colour getColour();
 
+	/// Sets line type (according to LineType enum)
 	void setLineType(int type);
 	int getLineType();
 
+	/// Set dashes' lenght
 	void setDashedValue1(unsigned int value);
 	unsigned int getDashedValue1();
 
+	/// Set dashes' gap size
 	void setDashedValue2(unsigned int value);
 	unsigned int getDashedValue2();
 
+	/// Set line's ends coodrinates
 	void setPos(Point<int> const &p1, Point<int> const &p2);
 	Point<int> getPoint1();
 	Point<int> getPoint2();
@@ -62,6 +68,7 @@ public:
 		boundBox = 4
 	};
 
+	/// Select setting object to manage all lines
 	static void selectLineSettings(LineSettings *lineSettings);
 
 private:
