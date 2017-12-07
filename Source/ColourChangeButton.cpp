@@ -38,6 +38,6 @@ void ColourChangeButton::changeListenerCallback(ChangeBroadcaster* source) {
 	};
 }
 
-void ColourChangeButton::deadOfColourSelector() {
+void ColourChangeButton::deadOfColourSelector() const noexcept {
 	sendActionMessage("R");         // remove
 }

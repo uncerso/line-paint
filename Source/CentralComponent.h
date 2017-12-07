@@ -22,19 +22,18 @@ class LineSettingsState;
 /// Application logic
 class CentralComponent
 	: public Component
-	, public KeyListener
 	, public ActionListener
 {
 public:
 	CentralComponent();
 	~CentralComponent();
+private:
 	void paint(Graphics &canvas) override;
 	void resized() override;
 
-	bool keyPressed(const KeyPress &key, Component *c ) override;
-
 	void mouseDown(const MouseEvent &event) override;
 	void mouseDrag(const MouseEvent &event) override;
+public:
 
 	/// Gets events from LineSettings (I know this is an antipattern)
 	void lineSettingsListener(const std::pair<LineSettingsState, LineSettingsState> &event);

@@ -25,11 +25,11 @@ CentralComponent::CentralComponent()
 	lineSettings = new LineSettings();
 	lineSettings->selectListener(this);
 	tools->addActionListener(this);
+	addKeyListener(tools);
 	LookAndFeel_V4::getDarkColourScheme().getUIColour(juce::LookAndFeel_V4::ColourScheme::UIColour::windowBackground);
 	LineComponent::selectLineSettings(lineSettings);
-	tabs->addTab("Tools", LookAndFeel_V4::getDarkColourScheme().getUIColour(juce::LookAndFeel_V4::ColourScheme::UIColour::windowBackground), tools, true);
-	tabs->addTab("Settings", LookAndFeel_V4::getMidnightColourScheme().getUIColour(juce::LookAndFeel_V4::ColourScheme::UIColour::windowBackground), lineSettings, true);
-	addKeyListener(this);
+	tabs->addTab("Tools", LookAndFeel_V4::getDarkColourScheme().getUIColour(juce::LookAndFeel_V4::ColourScheme::UIColour::windowBackground), tools, false);
+	tabs->addTab("Settings", LookAndFeel_V4::getMidnightColourScheme().getUIColour(juce::LookAndFeel_V4::ColourScheme::UIColour::windowBackground), lineSettings, false);
 	addAndMakeVisible(tabs);
 	tabs->setAlwaysOnTop(true);
 }
@@ -43,9 +43,6 @@ CentralComponent::~CentralComponent() {
 }
 
 void CentralComponent::paint(Graphics &canvas) {
-	//canvas.fillAll(Colour::fromRGB(rand() % 256, rand() % 256, rand() % 256));
-	//canvas.fillAll(Colour::fromRGB(255, 255, 255));
-	//canvas.fillAll(laf.getCurrentColourScheme().getUIColour(juce::LookAndFeel_V4::ColourScheme::UIColour::windowBackground));
 	canvas.fillAll(backgroundColour);
 }
 
@@ -136,23 +133,4 @@ void CentralComponent::addIntoTheMemory(const std::pair<LineSettingsState, LineS
 	auto x = new std::pair<LineSettingsState, LineSettingsState>(event);
 	handleDo(x->first, x->second);
 	memory.push(x);
-}
-
-bool CentralComponent::keyPressed(const KeyPress &key, Component *c) {
-	if (key.getModifiers().isCtrlDown() && ((key.getKeyCode() == 'Z') || (key.getKeyCode() == 'z'))) {
-		if (key.getModifiers().isShiftDown())
-			redo();
-		else
-			undo();
-		return true;
-	}
-	if (key.getKeyCode() == key.deleteKey) {
-		lineSettings->deleteCurrentLine();
-		return true;
-	}
-	if (key.getKeyCode() == key.escapeKey) {
-		LineComponent::select(nullptr);
-		return true;
-	}
-	return false;
 }

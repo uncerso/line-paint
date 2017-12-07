@@ -22,13 +22,16 @@ class Tools
 	, public Button::Listener
 	, public ActionBroadcaster
 	, public ActionListener
+	, public KeyListener
 {
-public:
 
 	void paint(Graphics &canvas) override;
 	void resized() override;
 	void buttonClicked(Button *button) override;
-
+	bool keyPressed(const KeyPress &key, Component *c ) override;
+	void undo() const noexcept;
+	void redo() const noexcept;
+public:
 	/// Returns selected background colour
 	Colour getColour() noexcept;
 	void actionListenerCallback(const String &s) override;
@@ -37,8 +40,8 @@ public:
 	~Tools();
 private:
 	CustomLookAndFeel laf;
-	TextButton undo;
-	TextButton redo;
+	TextButton undoButton;
+	TextButton redoButton;
 
 	ColourChangeButton colourButton;
 	Colour colour;

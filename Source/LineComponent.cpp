@@ -45,6 +45,15 @@ void LineComponent::select(LineComponent *object) {
 	if (lineSettings) lineSettings->update();
 }
 
+void LineComponent::deleteCurrentLine() {
+	if (lineSettings) {
+		lineSettings->deleteCurrentLine();
+		return;
+	}
+	if (selected)
+		delete selected;
+}
+
 LineComponent::LineComponent(int startX, int startY, int endX, int endY, int lineThickness, Colour colour, int lineType, unsigned int dashedValue1, unsigned int dashedValue2)
 	: Component("Line")
 	, dragMode(false)
@@ -56,6 +65,7 @@ LineComponent::LineComponent(int startX, int startY, int endX, int endY, int lin
 	//, deltaBounds(lineThickness, lineThickness)
 	, deltaBounds((lineThickness + 1) >> 1, (lineThickness + 1) >> 1 )
 {
+	setWantsKeyboardFocus(false);
 	setBufferedToImage(true);
 	int minX = std::min(startX, endX);
 	int minY = std::min(startY, endY);
@@ -75,6 +85,7 @@ LineComponent::LineComponent(int x, int y, int lineThickness, Colour colour, int
 	//, deltaBounds(lineThickness, lineThickness)
 	, deltaBounds((lineThickness + 1) >> 1, (lineThickness + 1) >> 1 )
 {
+	setWantsKeyboardFocus(false);
 	setBufferedToImage(true);
 	point1 = deltaBounds;
 	point2 = deltaBounds;
@@ -185,7 +196,7 @@ void LineComponent::setDashedValue1(unsigned int value) {
 	repaint();
 }
 
-unsigned int LineComponent::getDashedValue1() {
+unsigned int LineComponent::getDashedValue1() const noexcept {
 	return dashedValue1;
 }
 
@@ -194,19 +205,19 @@ void LineComponent::setDashedValue2(unsigned int value) {
 	repaint();
 }
 
-unsigned int LineComponent::getDashedValue2() {
+unsigned int LineComponent::getDashedValue2() const noexcept {
 	return dashedValue2;
 }
 
-Point<int> LineComponent::getPoint1() {
+Point<int> LineComponent::getPoint1() const noexcept {
 	return point1 + getPosition();
 }
 
-Point<int> LineComponent::getPoint2() {
+Point<int> LineComponent::getPoint2() const noexcept {
 	return point2 + getPosition();
 }
 
-int LineComponent::getLineThickness() {
+int LineComponent::getLineThickness() const noexcept {
 	return lineThickness;
 }
 
@@ -215,7 +226,7 @@ void LineComponent::setColour(Colour colour) {
 	repaint();
 }
 
-Colour LineComponent::getColour() {
+Colour LineComponent::getColour() const noexcept {
 	return colour;
 }
 
@@ -224,6 +235,6 @@ void LineComponent::setLineType(int type) {
 	repaint();
 }
 
-int LineComponent::getLineType() {
+int LineComponent::getLineType() const noexcept {
 	return type;
 }

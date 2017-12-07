@@ -78,7 +78,6 @@ class LineSettings
 	, public Button::Listener
 	, public ActionListener
 {
-public:
 
 	void paint(Graphics &canvas) override;
 	void resized() override;
@@ -86,6 +85,7 @@ public:
 	void buttonClicked(Button *button) override;
 
 	void actionListenerCallback(const String &s) override;
+public:
 
 	/// Update information about currently selected line
 	void update();

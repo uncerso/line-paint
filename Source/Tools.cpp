@@ -15,20 +15,21 @@
 Tools::Tools(Colour const &colour)
 	: Component("Tools")
 {
-
+	setWantsKeyboardFocus(true);
 	setLookAndFeel(&laf);
-	undo.setButtonText("undo");
-	undo.addListener(this);
-	addAndMakeVisible(undo);
+	undoButton.setButtonText("undo");
+	undoButton.addListener(this);
+	addAndMakeVisible(undoButton);
 
-	redo.setButtonText("redo");
-	redo.addListener(this);
-	addAndMakeVisible(redo);
+	redoButton.setButtonText("redo");
+	redoButton.addListener(this);
+	addAndMakeVisible(redoButton);
 
 	colourButton.setButtonText("Click to change background colour");
 	colourButton.addActionListener(this);
 	colourButton.selectColour(colour);
 	addAndMakeVisible(colourButton);
+	addKeyListener(this);
 }
 
 Tools::~Tools() {
@@ -55,12 +56,39 @@ void Tools::resized() {
 	int sliderLeft = proportionOfWidth(0.1f);
 	int width = proportionOfWidth(0.8f);
 	laf.setFontSize(proportionOfHeight(0.02f));
-	undo.setBounds(sliderLeft, proportionOfHeight(0.05f), width >> 1, proportionOfHeight(0.05f) );
-	redo.setBounds(sliderLeft + (width >> 1), proportionOfHeight(0.05f), width >> 1, proportionOfHeight(0.05f) );
+	undoButton.setBounds(sliderLeft, proportionOfHeight(0.05f), width >> 1, proportionOfHeight(0.05f) );
+	redoButton.setBounds(sliderLeft + (width >> 1), proportionOfHeight(0.05f), width >> 1, proportionOfHeight(0.05f) );
 	colourButton.setBounds(sliderLeft, proportionOfHeight(0.15f), width,  proportionOfHeight(0.05f));
 }
 
 void Tools::buttonClicked(Button *button) {
-	if (button == &undo) sendActionMessage("U");
-	if (button == &redo) sendActionMessage("R");
+	if (button == &undoButton) undo();
+	if (button == &redoButton) redo();
+}
+
+void Tools::undo() const noexcept {
+	sendActionMessage("U");
+}
+
+void Tools::redo() const noexcept {
+	sendActionMessage("R");
+}
+
+bool Tools::keyPressed(const KeyPress &key, Component *c) {
+	if (key.getModifiers().isCtrlDown() && ((key.getKeyCode() == 'Z') || (key.getKeyCode() == 'z'))) {
+		if (key.getModifiers().isShiftDown())
+			redo();
+		else
+			undo();
+		return true;
+	}
+	if (key.getKeyCode() == key.deleteKey) {
+		LineComponent::deleteCurrentLine();
+		return true;
+	}
+	if (key.getKeyCode() == key.escapeKey) {
+		LineComponent::select(nullptr);
+		return true;
+	}
+	return false;
 }

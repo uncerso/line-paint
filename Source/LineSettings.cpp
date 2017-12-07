@@ -16,6 +16,7 @@ LineSettings::LineSettings()
 	: Component("LineSettings")
 	, defaultSettings(true, nullptr, 10, LineComponent::LineType::rounded)
 {
+	setWantsKeyboardFocus(false);
 	laf.setColourScheme(LookAndFeel_V4::getMidnightColourScheme());
 	setLookAndFeel(&laf);
 

@@ -41,6 +41,6 @@ public:
 	void changeListenerCallback(ChangeBroadcaster* source) override;
 
 	/// Sends message about its death to its listeners
-	void deadOfColourSelector();
+	void deadOfColourSelector() const noexcept;
 
 };
