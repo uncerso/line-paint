@@ -33,6 +33,6 @@ public:
 	/// Checks whether multiple instances of the app are allowed
 	bool moreThanOneInstanceAllowed() override;
 
-public:
+private:
 	MainForm *mainForm;
 };

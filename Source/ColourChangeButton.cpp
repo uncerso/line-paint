@@ -9,6 +9,7 @@
 */
 
 #include "ColourChangeButton.h"
+#include "stringConstants.h"
 
 ColourChangeButton::ColourChangeButton(const String &s)
 	: TextButton(s)
@@ -20,7 +21,7 @@ void ColourChangeButton::selectColour(Colour const &colour) {
 }
 
 void ColourChangeButton::clicked() {
-	sendActionMessage("C");         // create
+	sendActionMessage(CREATE_COLOUR_SELECTOR);         // create
 	CustomColourSelector *colourSelector = new CustomColourSelector(this);
 	colourSelector->setName("background");
 	colourSelector->setCurrentColour(findColour(TextButton::buttonColourId));
@@ -34,10 +35,10 @@ void ColourChangeButton::changeListenerCallback(ChangeBroadcaster* source) {
 	if (ColourSelector * cs = dynamic_cast<ColourSelector*>(source)) {
 		setColour(TextButton::buttonColourId, cs->getCurrentColour());
 		setColour(TextButton::textColourOffId, cs->getCurrentColour().contrasting(1));
-		sendActionMessage("H");         // change
+		sendActionMessage(CHANGE_COLOUR_BUTTON);         // change
 	};
 }
 
 void ColourChangeButton::deadOfColourSelector() const noexcept {
-	sendActionMessage("R");         // remove
+	sendActionMessage(REMOVE_COLOUR_SELECTOR);         // remove
 }

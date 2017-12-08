@@ -11,6 +11,7 @@
 #include "LineSettings.h"
 #include "LineComponent.h"
 #include "CentralComponent.h"
+#include "stringConstants.h"
 
 LineSettings::LineSettings()
 	: Component("LineSettings")
@@ -27,7 +28,7 @@ LineSettings::LineSettings()
 	addAndMakeVisible(lineThickness);
 	lineThickness.setTextValueSuffix(" px");
 	lineThickness.addListener(this);
-	lineThickness.addActionListener(this);
+	lineThickness.addObjectListener(this);
 	lineThickness.setRange(1, 100, 1);
 	lineThickness.setValue(3);
 	addAndMakeVisible(lineThicknessLabel);
@@ -73,7 +74,7 @@ LineSettings::LineSettings()
 		addAndMakeVisible(s);
 		s->setTextValueSuffix(" px");
 		s->addListener(this);
-		s->addActionListener(this);
+		s->addObjectListener(this);
 		s->setRange(1, 100, 1);
 		s->setValue(8);
 	}
@@ -123,26 +124,28 @@ void LineSettings::resized() {
 void LineSettings::actionListenerCallback(const String &s) {
 	//jassert(s.size() == 1);
 	switch (s[0]) {
-	case 'H': // change colourButton
+	case *CHANGE_COLOUR_BUTTON: // change colourButton
 		if (LineComponent::selected)
 			LineComponent::selected->setColour(colourButton.findColour(TextButton::buttonColourId));
 		else
 			defaultSettings.colour = colourButton.findColour(TextButton::buttonColourId);
 		break;
-	case 'C': // create colourSelector
+	case *CREATE_COLOUR_SELECTOR: // create colourSelector
 		startChange();
 		break;
-	case 'R': // remove colourSelector
-		endChange();
-		break;
-	case 'D': // mouse down on the slider
-		startChange();
-		break;
-	case 'U': // mouse up on the slider
+	case *REMOVE_COLOUR_SELECTOR: // remove colourSelector
 		endChange();
 		break;
 	default: break;
 	}
+}
+
+void LineSettings::objectListenerCallback(const char &event) {
+	if (event == *MOUSE_DOWN_ON_THE_SLIDER) // mouse down on the slider
+		startChange();
+
+	if (event == *MOUSE_UP_ON_THE_SLIDER) // mouse up on the slider
+		endChange();
 }
 
 void LineSettings::sliderValueChanged(Slider *slider) {
@@ -248,13 +251,9 @@ void LineSettings::update() {
 	colourButton.setColour(TextButton::buttonColourId, defaultSettings.getColour());
 }
 
-void LineSettings::selectListener(CentralComponent *centralComponent) {
-	this->centralComponent = centralComponent;
-}
-
 void LineSettings::deleteCurrentLine() {
 	if (!LineComponent::selected) return;
-	centralComponent->lineSettingsListener(std::make_pair(LineSettingsState(true, LineComponent::selected), LineSettingsState(false, LineComponent::selected)));
+	sendObjectMessage(std::make_pair(LineSettingsState(true, LineComponent::selected), LineSettingsState(false, LineComponent::selected)));
 	LineComponent::select(nullptr);
 }
 
@@ -273,66 +272,5 @@ void LineSettings::endChange() {
 	auto &x(LineComponent::selected);
 	LineSettingsState endSettingChange(true, x, x->getLineThickness(), x->getLineType(), x->getColour(), x->getPoint1(), x->getPoint2(), x->getDashedValue1(), x->getDashedValue2());
 	if (startSettingChange != endSettingChange)
-		centralComponent->lineSettingsListener(std::make_pair(startSettingChange, endSettingChange));
-}
-
-//==============================================================================
-LineSettingsState::LineSettingsState(bool exist, LineComponent *ptr, int lineThickness, int type, Colour colour, Point<int> const &globalPosPoint1, Point<int> const &globalPosPoint2, unsigned int dashedValue1, unsigned int dashedValue2)
-	: exist(exist)
-	, ptr(ptr)
-	, lineThickness(lineThickness)
-	, type(type)
-	, colour(colour)
-	, globalPosPoint1(globalPosPoint1)
-	, globalPosPoint2(globalPosPoint2)
-	, dashedValue1(dashedValue1)
-	, dashedValue2(dashedValue2)
-{}
-
-bool LineSettingsState::operator!=(LineSettingsState const &other) const {
-	return globalPosPoint1 != other.globalPosPoint1 ||
-	       globalPosPoint2 != other.globalPosPoint2 ||
-	       exist != other.exist ||
-	       ptr != other.ptr ||
-	       lineThickness != other.lineThickness ||
-	       type != other.type ||
-	       colour != other.colour ||
-	       dashedValue1 != other.dashedValue1 ||
-	       dashedValue2 != other.dashedValue2;
-}
-
-bool LineSettingsState::isExist()  const {
-	return exist;
-}
-
-LineComponent* LineSettingsState::getPtr() const {
-	return ptr;
-}
-
-int LineSettingsState::getLineThickness() const {
-	return lineThickness;
-}
-
-int LineSettingsState::getType() const {
-	return type;
-}
-
-Colour LineSettingsState::getColour() const {
-	return colour;
-}
-
-Point<int> LineSettingsState::getGlobalPosPoint1() const {
-	return globalPosPoint1;
-}
-
-Point<int> LineSettingsState::getGlobalPosPoint2() const {
-	return globalPosPoint2;
-}
-
-unsigned int LineSettingsState::getDashedValue1() const {
-	return dashedValue1;
-}
-
-unsigned int LineSettingsState::getDashedValue2() const {
-	return dashedValue2;
+		sendObjectMessage(std::make_pair(startSettingChange, endSettingChange));
 }

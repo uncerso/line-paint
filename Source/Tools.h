@@ -13,6 +13,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "CustomLookAndFeel.h"
 #include "ColourChangeButton.h"
+#include "ObjectBroadcaster.h"
 
 class CentralComponent;
 
@@ -20,17 +21,18 @@ class CentralComponent;
 class Tools
 	: public Component
 	, public Button::Listener
-	, public ActionBroadcaster
 	, public ActionListener
 	, public KeyListener
+	, public ActionBroadcaster
+	, public ObjectBroadcaster<char>
 {
 
 	void paint(Graphics &canvas) override;
 	void resized() override;
 	void buttonClicked(Button *button) override;
 	bool keyPressed(const KeyPress &key, Component *c ) override;
-	void undo() const noexcept;
-	void redo() const noexcept;
+	void undo();
+	void redo();
 public:
 	/// Returns selected background colour
 	Colour getColour() noexcept;
@@ -45,4 +47,8 @@ private:
 
 	ColourChangeButton colourButton;
 	Colour colour;
+
+	GroupComponent gpHotkeys;
+	Label hotkeysLabelKeys;
+	Label hotkeysLabelInfo;
 };

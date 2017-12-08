@@ -12,9 +12,12 @@
 #include "LineComponent.h"
 #include "Tools.h"
 #include "LineSettings.h"
+#include "Memorize.h"
+#include "stringConstants.h"
 
 CentralComponent::CentralComponent()
 	: Component("Central Component")
+	, lastLine(nullptr)
 {
 	setWantsKeyboardFocus(true);
 	laf.setColourScheme(LookAndFeel_V4::getLightColourScheme());
@@ -23,7 +26,9 @@ CentralComponent::CentralComponent()
 	tabs = new TabbedComponent(TabbedButtonBar::TabsAtRight);
 	tools = new Tools(backgroundColour);
 	lineSettings = new LineSettings();
-	lineSettings->selectListener(this);
+	memorize = new Memorize();
+	lineSettings->addObjectListener(memorize);
+	tools->addObjectListener(memorize);
 	tools->addActionListener(this);
 	addKeyListener(tools);
 	LookAndFeel_V4::getDarkColourScheme().getUIColour(juce::LookAndFeel_V4::ColourScheme::UIColour::windowBackground);
@@ -52,14 +57,14 @@ void CentralComponent::mouseDown(const MouseEvent &event) {
 		return;
 	}
 	LineSettingsState const & state(lineSettings->getDefaultState());
-	lines.push_back(new LineComponent(event.getMouseDownX(), event.getMouseDownY(), state.getLineThickness(), state.getColour(), state.getType(), state.getDashedValue1(), state.getDashedValue2()));
-	addAndMakeVisible(lines.back());
-	addIntoTheMemory(std::make_pair(LineSettingsState(false, lines.back()), LineSettingsState(true, lines.back())));
+	lastLine = new LineComponent(event.getMouseDownX(), event.getMouseDownY(), state.getLineThickness(), state.getColour(), state.getType(), state.getDashedValue1(), state.getDashedValue2());
+	addAndMakeVisible(lastLine);
+	addIntoTheMemory(std::make_pair(LineSettingsState(false, lastLine), LineSettingsState(true, lastLine)));
 }
 
 void CentralComponent::mouseDrag(const MouseEvent &event) {
 	if (event.mods == ModifierKeys::leftButtonModifier)
-		lines.back()->mouseDrag(event);
+		lastLine->mouseDrag(event);
 }
 
 void CentralComponent::resized() {
@@ -67,70 +72,17 @@ void CentralComponent::resized() {
 	tabs->setTabBarDepth(proportionOfHeight(0.03f));
 }
 
-void CentralComponent::handleDo(LineSettingsState const & fst, LineSettingsState const & snd) {
-	if (!fst.isExist() && snd.isExist())
-		fst.getPtr()->setVisible(true);
-	else
-	if (fst.isExist() && !snd.isExist()) {
-		fst.getPtr()->setVisible(false);
-		LineComponent::selectNullptrIfSelected(fst.getPtr());
-	}
-	else{
-		auto y = snd.getPtr();
-		y->setPos(snd.getGlobalPosPoint1(), snd.getGlobalPosPoint2());
-		y->setLineThickness(snd.getLineThickness());
-		y->setLineType(snd.getType());
-		y->setColour(snd.getColour());
-		y->setDashedValue1(snd.getDashedValue1());
-		y->setDashedValue2(snd.getDashedValue2());
-	}
-}
-
-void CentralComponent::undo() {
-	// second -> first
-	if (memory.empty()) return;
-	handleDo(memory.top()->second, memory.top()->first);
-	undosMemory.push(memory.top());
-	memory.pop();
-	lineSettings->update();
-}
-
-void CentralComponent::redo() {
-	// first -> second
-	if (undosMemory.empty()) return;
-	handleDo(undosMemory.top()->first, undosMemory.top()->second);
-	memory.push(undosMemory.top());
-	undosMemory.pop();
-	lineSettings->update();
-}
-
 void CentralComponent::lineSettingsListener(const std::pair<LineSettingsState, LineSettingsState> &event) {
 	addIntoTheMemory(event);
 }
 
 void CentralComponent::actionListenerCallback(const String &s) {
-	switch (s[0]) {
-	case 'U':
-		undo();
-		break;
-	case 'R':
-		redo();
-		break;
-	case 'H':
+	if (s == CHANGE_COLOUR_BUTTON) {
 		backgroundColour = tools->getColour();
 		repaint();
-		break;
-	default:
-		break;
 	}
 }
 
 void CentralComponent::addIntoTheMemory(const std::pair<LineSettingsState, LineSettingsState> &event) {
-	while (!undosMemory.empty()) {
-		delete undosMemory.top();
-		undosMemory.pop();
-	}
-	auto x = new std::pair<LineSettingsState, LineSettingsState>(event);
-	handleDo(x->first, x->second);
-	memory.push(x);
+	memorize->addIntoMemory(event);
 }

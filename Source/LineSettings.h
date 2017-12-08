@@ -12,64 +12,28 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "CustomLookAndFeel.h"
 #include "ColourChangeButton.h"
+#include "stringConstants.h"
+#include "LineSettingsState.h"
+#include "ObjectBroadcaster.h"
+
 class CustomSlider
 	: public Slider
-	, public ActionBroadcaster
+	, public ObjectBroadcaster<char>
 {
 public:
 	void mouseDown(const MouseEvent &event) override {
-		sendActionMessage("D"); // down
+		sendObjectMessage(*MOUSE_DOWN_ON_THE_SLIDER); // down
 		Slider::mouseDown(event);
 	}
 
 	void mouseUp(const MouseEvent &event) override {
-		sendActionMessage("U"); // up
 		Slider::mouseUp(event);
+		sendObjectMessage(*MOUSE_UP_ON_THE_SLIDER); // up
 	}
 
 };
 
 class LineComponent;
-class LineSettings;
-class CentralComponent;
-
-class LineSettingsState {
-	friend LineSettings;
-public:
-	LineSettingsState(bool del = false,
-	                  LineComponent *ptr = nullptr,
-	                  int lineThickness = 0,
-	                  int type = 0,
-	                  Colour colour = Colour::fromRGB(45, 91, 129),
-	                  Point<int> const &globalPosPoint1 = Point<int>(),
-	                  Point<int> const &globalPosPoint2 = Point<int>(),
-	                  unsigned int dashedValue1 = 8,
-	                  unsigned int dashedValue2 = 8
-	                  );
-	~LineSettingsState() = default;
-
-	/// Indicates whether the line is shown
-	bool isExist() const;
-	LineComponent*getPtr() const;
-	int getLineThickness() const;
-	int getType() const;
-	Colour getColour() const;
-	Point<int> getGlobalPosPoint1() const;
-	Point<int> getGlobalPosPoint2() const;
-	bool operator!=(LineSettingsState const &other) const;
-	unsigned int getDashedValue1() const;
-	unsigned int getDashedValue2() const;
-private:
-	bool exist;
-	LineComponent *ptr;
-	int lineThickness;
-	int type;
-	Colour colour;
-	Point<int> globalPosPoint1;
-	Point<int> globalPosPoint2;
-	unsigned int dashedValue1;
-	unsigned int dashedValue2;
-};
 
 /// Manage line changes
 class LineSettings
@@ -77,6 +41,8 @@ class LineSettings
 	, public Slider::Listener
 	, public Button::Listener
 	, public ActionListener
+	, public ObjectBroadcaster<std::pair<LineSettingsState, LineSettingsState> >
+	, public ObjectBroadcaster<char>::ObjectListener
 {
 
 	void paint(Graphics &canvas) override;
@@ -85,13 +51,11 @@ class LineSettings
 	void buttonClicked(Button *button) override;
 
 	void actionListenerCallback(const String &s) override;
+	void objectListenerCallback(char const & event) override;
 public:
 
 	/// Update information about currently selected line
 	void update();
-
-	/// Selects listener to send events to
-	void selectListener(CentralComponent *centralComponent);
 
 	/// Remembers line information before it started changing
 	void startChange();
@@ -111,8 +75,6 @@ public:
 
 private:
 	void handleButtonClick(Button *button);
-
-	CentralComponent *centralComponent;
 
 	LineSettingsState defaultSettings;
 	LineSettingsState startSettingChange;

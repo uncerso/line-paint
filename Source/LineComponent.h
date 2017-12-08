@@ -19,6 +19,13 @@ class LineComponent
 {
 	friend LineSettings;
 public:
+	enum LineType {
+		solid = 0,
+		dashed = 1,
+		rounded = 2,
+		boundBox = 4
+	};
+
 	LineComponent(int startX, int startY, int endX, int endY, int lineThickness = 3, Colour colour = Colour::fromRGB(0, 0, 0), int lineType = LineType::solid | LineType::rounded, unsigned int dashedValue1 = 8, unsigned int dashedValue2 = 8);
 	LineComponent(int x, int y, int lineThickness = 3, Colour colour = Colour::fromRGB(0, 0, 0), int lineType = LineType::solid | LineType::rounded, unsigned int dashedValue1 = 8, unsigned int dashedValue2 = 8);
 	~LineComponent();
@@ -60,13 +67,6 @@ public:
 	void setPos(Point<int> const &p1, Point<int> const &p2);
 	Point<int> getPoint1() const noexcept;
 	Point<int> getPoint2() const noexcept;
-
-	enum LineType {
-		solid = 0,
-		dashed = 1,
-		rounded = 2,
-		boundBox = 4
-	};
 
 	/// Select setting object to manage all lines
 	static void selectLineSettings(LineSettings *lineSettings);

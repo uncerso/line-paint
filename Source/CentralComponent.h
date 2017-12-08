@@ -10,14 +10,14 @@
 
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
-#include <list>
-#include <stack>
+// #include <list>
 //#include "LineSettings.h"
 
 class LineComponent;
 class Tools;
 class LineSettings;
 class LineSettingsState;
+class Memorize;
 
 /// Application logic
 class CentralComponent
@@ -53,8 +53,7 @@ private:
 	TabbedComponent *tabs;
 	Tools *tools;
 	LineSettings *lineSettings;
-	std::list<LineComponent*> lines;
-	std::stack<std::pair<LineSettingsState, LineSettingsState>*> memory;
-	std::stack<std::pair<LineSettingsState, LineSettingsState>*> undosMemory;
+	Memorize *memorize;
+	LineComponent* lastLine;
 
 };

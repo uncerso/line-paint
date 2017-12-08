@@ -226,6 +226,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\LineSettingsState.cpp">
+      <Filter>line-paint\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Memorize.cpp">
+      <Filter>line-paint\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\ColourChangeButton.cpp">
       <Filter>line-paint\Source</Filter>
     </ClCompile>
@@ -1512,6 +1518,18 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\ObjectBroadcaster.h">
+      <Filter>line-paint\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LineSettingsState.h">
+      <Filter>line-paint\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Memorize.h">
+      <Filter>line-paint\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\stringConstants.h">
+      <Filter>line-paint\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\ColourChangeButton.h">
       <Filter>line-paint\Source</Filter>
     </ClInclude>

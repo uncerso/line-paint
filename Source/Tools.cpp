@@ -11,6 +11,7 @@
 #include "Tools.h"
 #include "LineComponent.h"
 #include "CentralComponent.h"
+#include "stringConstants.h"
 
 Tools::Tools(Colour const &colour)
 	: Component("Tools")
@@ -30,6 +31,21 @@ Tools::Tools(Colour const &colour)
 	colourButton.selectColour(colour);
 	addAndMakeVisible(colourButton);
 	addKeyListener(this);
+
+	addAndMakeVisible(gpHotkeys);
+	gpHotkeys.setText("Hotkeys\n\n");
+	addAndMakeVisible(hotkeysLabelKeys);
+	hotkeysLabelKeys.setText("ctrl + z\n"
+	                         "ctrl + shift + z\n"
+	                         "esc\n"
+	                         "delete",
+	                         NotificationType::dontSendNotification);
+	addAndMakeVisible(hotkeysLabelInfo);
+	hotkeysLabelInfo.setText(" : undo\n"
+	                         " : redo\n"
+	                         " : unselect curent line\n"
+	                         " : delete curent line",
+	                         NotificationType::dontSendNotification);
 }
 
 Tools::~Tools() {
@@ -46,7 +62,7 @@ Colour Tools::getColour() noexcept {
 }
 
 void Tools::actionListenerCallback(const String &s) {
-	if (s[0] == 'H') {
+	if (s == CHANGE_COLOUR_BUTTON) {
 		colour = colourButton.findColour(TextButton::buttonColourId);
 		sendActionMessage(s);
 	}
@@ -59,6 +75,9 @@ void Tools::resized() {
 	undoButton.setBounds(sliderLeft, proportionOfHeight(0.05f), width >> 1, proportionOfHeight(0.05f) );
 	redoButton.setBounds(sliderLeft + (width >> 1), proportionOfHeight(0.05f), width >> 1, proportionOfHeight(0.05f) );
 	colourButton.setBounds(sliderLeft, proportionOfHeight(0.15f), width,  proportionOfHeight(0.05f));
+	gpHotkeys.setBounds(sliderLeft >> 1, proportionOfHeight(0.25f), (getWidth() + width ) >> 1,  proportionOfHeight(0.15f));
+	hotkeysLabelKeys.setBounds(sliderLeft, proportionOfHeight(0.25f), width * 0.3,  proportionOfHeight(0.15f));
+	hotkeysLabelInfo.setBounds(sliderLeft + hotkeysLabelKeys.getWidth(), proportionOfHeight(0.25f), width - hotkeysLabelKeys.getWidth(),  proportionOfHeight(0.15f));
 }
 
 void Tools::buttonClicked(Button *button) {
@@ -66,12 +85,12 @@ void Tools::buttonClicked(Button *button) {
 	if (button == &redoButton) redo();
 }
 
-void Tools::undo() const noexcept {
-	sendActionMessage("U");
+void Tools::undo() {
+	sendObjectMessage(*UNDO);
 }
 
-void Tools::redo() const noexcept {
-	sendActionMessage("R");
+void Tools::redo() {
+	sendObjectMessage(*REDO);
 }
 
 bool Tools::keyPressed(const KeyPress &key, Component *c) {

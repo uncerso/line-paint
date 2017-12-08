@@ -62,7 +62,6 @@ LineComponent::LineComponent(int startX, int startY, int endX, int endY, int lin
 	, dashedValue1(dashedValue1)
 	, dashedValue2(dashedValue2)
 	, colour(colour)
-	//, deltaBounds(lineThickness, lineThickness)
 	, deltaBounds((lineThickness + 1) >> 1, (lineThickness + 1) >> 1 )
 {
 	setWantsKeyboardFocus(false);
@@ -82,7 +81,6 @@ LineComponent::LineComponent(int x, int y, int lineThickness, Colour colour, int
 	, dashedValue1(dashedValue1)
 	, dashedValue2(dashedValue2)
 	, colour(colour)
-	//, deltaBounds(lineThickness, lineThickness)
 	, deltaBounds((lineThickness + 1) >> 1, (lineThickness + 1) >> 1 )
 {
 	setWantsKeyboardFocus(false);
@@ -111,7 +109,6 @@ void LineComponent::paint(Graphics &canvas) {
 	}
 
 	if (selected == this) {
-		//canvas.setColour(Colour::fromRGB(rand() % 256, rand() % 256, rand() % 256));
 		canvas.setColour(colour.contrasting(0.5));
 		canvas.fillEllipse(point1.getX() - (lineThickness) / 2, point1.getY() - (lineThickness + 1) / 2, lineThickness, lineThickness);
 		canvas.fillEllipse(point2.getX() - (lineThickness) / 2, point2.getY() - (lineThickness + 1) / 2, lineThickness, lineThickness);
@@ -178,6 +175,8 @@ void LineComponent::setLineThickness(int lineThickness) {
 	point2 += deltaBounds;
 	setBounds(startX - deltaBounds.getX(), startY -  deltaBounds.getY(), wi + 2 * deltaBounds.getX(), hi + 2 * deltaBounds.getY());
 	repaint();
+	if (lineSettings)
+		lineSettings->update();
 }
 
 void LineComponent::setPos(Point<int> const &p1, Point<int> const &p2) {
@@ -189,11 +188,15 @@ void LineComponent::setPos(Point<int> const &p1, Point<int> const &p2) {
 	point1 = p1 - getPosition();
 	point2 = p2 - getPosition();
 	repaint();
+	if (lineSettings)
+		lineSettings->update();
 }
 
 void LineComponent::setDashedValue1(unsigned int value) {
 	dashedValue1 = value;
 	repaint();
+	if (lineSettings)
+		lineSettings->update();
 }
 
 unsigned int LineComponent::getDashedValue1() const noexcept {
@@ -203,6 +206,8 @@ unsigned int LineComponent::getDashedValue1() const noexcept {
 void LineComponent::setDashedValue2(unsigned int value) {
 	dashedValue2 = value;
 	repaint();
+	if (lineSettings)
+		lineSettings->update();
 }
 
 unsigned int LineComponent::getDashedValue2() const noexcept {
@@ -224,6 +229,8 @@ int LineComponent::getLineThickness() const noexcept {
 void LineComponent::setColour(Colour colour) {
 	this->colour = colour;
 	repaint();
+	if (lineSettings)
+		lineSettings->update();
 }
 
 Colour LineComponent::getColour() const noexcept {
@@ -233,6 +240,8 @@ Colour LineComponent::getColour() const noexcept {
 void LineComponent::setLineType(int type) {
 	this->type = type;
 	repaint();
+	if (lineSettings)
+		lineSettings->update();
 }
 
 int LineComponent::getLineType() const noexcept {
