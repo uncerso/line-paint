@@ -62,9 +62,9 @@ Colour Tools::getColour() noexcept {
 }
 
 void Tools::actionListenerCallback(const String &s) {
-	if (s == CHANGE_COLOUR_BUTTON) {
+	if (s[0] == changeColourButton) {
 		colour = colourButton.findColour(TextButton::buttonColourId);
-		sendActionMessage(s);
+		sendObjectMessage(s[0]);
 	}
 }
 
@@ -86,11 +86,11 @@ void Tools::buttonClicked(Button *button) {
 }
 
 void Tools::undo() {
-	sendObjectMessage(*UNDO);
+	sendObjectMessage(::undo);
 }
 
 void Tools::redo() {
-	sendObjectMessage(*REDO);
+	sendObjectMessage(::redo);
 }
 
 bool Tools::keyPressed(const KeyPress &key, Component *c) {

@@ -29,7 +29,7 @@ CentralComponent::CentralComponent()
 	memorize = new Memorize();
 	lineSettings->addObjectListener(memorize);
 	tools->addObjectListener(memorize);
-	tools->addActionListener(this);
+	tools->addObjectListener(this);
 	addKeyListener(tools);
 	LookAndFeel_V4::getDarkColourScheme().getUIColour(juce::LookAndFeel_V4::ColourScheme::UIColour::windowBackground);
 	LineComponent::selectLineSettings(lineSettings);
@@ -76,8 +76,8 @@ void CentralComponent::lineSettingsListener(const std::pair<LineSettingsState, L
 	addIntoTheMemory(event);
 }
 
-void CentralComponent::actionListenerCallback(const String &s) {
-	if (s == CHANGE_COLOUR_BUTTON) {
+void CentralComponent::objectListenerCallback(char const & c){
+	if (c == changeColourButton) {
 		backgroundColour = tools->getColour();
 		repaint();
 	}

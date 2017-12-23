@@ -22,13 +22,13 @@ class CustomSlider
 {
 public:
 	void mouseDown(const MouseEvent &event) override {
-		sendObjectMessage(*MOUSE_DOWN_ON_THE_SLIDER); // down
+		sendObjectMessage(mouseDownOnTheSlider); // down
 		Slider::mouseDown(event);
 	}
 
 	void mouseUp(const MouseEvent &event) override {
 		Slider::mouseUp(event);
-		sendObjectMessage(*MOUSE_UP_ON_THE_SLIDER); // up
+		sendObjectMessage(mouseUpOnTheSlider); // up
 	}
 
 };

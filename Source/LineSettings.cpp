@@ -124,16 +124,16 @@ void LineSettings::resized() {
 void LineSettings::actionListenerCallback(const String &s) {
 	//jassert(s.size() == 1);
 	switch (s[0]) {
-	case *CHANGE_COLOUR_BUTTON: // change colourButton
+	case changeColourButton: // change colourButton
 		if (LineComponent::selected)
 			LineComponent::selected->setColour(colourButton.findColour(TextButton::buttonColourId));
 		else
 			defaultSettings.colour = colourButton.findColour(TextButton::buttonColourId);
 		break;
-	case *CREATE_COLOUR_SELECTOR: // create colourSelector
+	case createColourSelector: // create colourSelector
 		startChange();
 		break;
-	case *REMOVE_COLOUR_SELECTOR: // remove colourSelector
+	case removeColourSelector: // remove colourSelector
 		endChange();
 		break;
 	default: break;
@@ -141,10 +141,10 @@ void LineSettings::actionListenerCallback(const String &s) {
 }
 
 void LineSettings::objectListenerCallback(const char &event) {
-	if (event == *MOUSE_DOWN_ON_THE_SLIDER) // mouse down on the slider
+	if (event == mouseDownOnTheSlider) // mouse down on the slider
 		startChange();
 
-	if (event == *MOUSE_UP_ON_THE_SLIDER) // mouse up on the slider
+	if (event == mouseUpOnTheSlider) // mouse up on the slider
 		endChange();
 }
 

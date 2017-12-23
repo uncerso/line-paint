@@ -64,8 +64,8 @@ void Memorize::objectListenerCallback(std::pair<LineSettingsState, LineSettingsS
 }
 
 void Memorize::objectListenerCallback(char const & event) {
-	if (event == *UNDO) undo();
-	if (event == *REDO) redo();
+	if (event == ::undo) undo();
+	if (event == ::redo) redo();
 }
 
 class MemorizeTests

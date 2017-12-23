@@ -10,8 +10,7 @@
 
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
-// #include <list>
-//#include "LineSettings.h"
+#include "ObjectBroadcaster.h"
 
 class LineComponent;
 class Tools;
@@ -22,7 +21,7 @@ class Memorize;
 /// Application logic
 class CentralComponent
 	: public Component
-	, public ActionListener
+	, public ObjectBroadcaster<char>::ObjectListener
 {
 public:
 	CentralComponent();
@@ -38,15 +37,9 @@ public:
 	/// Gets events from LineSettings (I know this is an antipattern)
 	void lineSettingsListener(const std::pair<LineSettingsState, LineSettingsState> &event);
 
-	void actionListenerCallback(const String &s) override;
-
-	/// Undo
-	void undo();
-	/// Redo
-	void redo();
 private:
 
-	void handleDo(LineSettingsState const & fst, LineSettingsState const & snd);
+	void objectListenerCallback(char const & c) override;
 	void addIntoTheMemory(const std::pair<LineSettingsState, LineSettingsState> &event);
 	LookAndFeel_V4 laf;
 	Colour backgroundColour;

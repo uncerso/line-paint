@@ -8,17 +8,12 @@
   ==============================================================================
 */
 
-//It does not "define". It seemed to you.
-#define CREATE_COLOUR_SELECTOR "C"
-#define REMOVE_COLOUR_SELECTOR "R"
-#define CHANGE_COLOUR_BUTTON "H"
-#define MOUSE_DOWN_ON_THE_SLIDER "D"
-#define MOUSE_UP_ON_THE_SLIDER "U"
-#define UNDO "N"
-#define REDO "E"
+#pragma once
 
-// const char * const createColourSelector("C");
-// const char * const removeColourSelector("R");
-// const char * const changeColourButton("H");
-// const char * const mouseDownOnTheSlider("D");
-// const char * const mouseUpOnTheSlider("U");
+static const char createColourSelector('C');
+static const char removeColourSelector('R');
+static const char changeColourButton('H');
+static const char mouseDownOnTheSlider('D');
+static const char mouseUpOnTheSlider('U');
+static const char undo('N');
+static const char redo('E');
