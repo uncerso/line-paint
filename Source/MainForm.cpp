@@ -22,6 +22,13 @@ MainForm::MainForm() : DocumentWindow(
 	setVisible(true);
 	centralComponent = new CentralComponent();
 	setContentOwned(centralComponent, false);
+
+	unit = new	UnitTestClasses::UnitTestsDemo();
+	unit->setName("background");
+	unit->setColour(ColourSelector::backgroundColourId, Colours::transparentBlack);
+	unit->setSize(DocumentWindow::getTopLevelWindow(0)->getParentWidth() * 0.3, DocumentWindow::getTopLevelWindow(0)->getParentHeight() * 0.5);
+	CallOutBox::launchAsynchronously(unit, getScreenBounds(), nullptr);
+
 	// setUsingNativeTitleBar(true);
 #if JUCE_OPENGL
 	openGLContext.attachTo(*getTopLevelComponent());

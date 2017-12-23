@@ -66,6 +66,7 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS_APP := \
+  $(JUCE_OBJDIR)/ObjectBroadcaster_6affa50.o \
   $(JUCE_OBJDIR)/LineSettingsState_c38e8efb.o \
   $(JUCE_OBJDIR)/Memorize_a4ed4065.o \
   $(JUCE_OBJDIR)/ColourChangeButton_3b7dbd77.o \
@@ -95,6 +96,11 @@ $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) : check-pkg-config $(OBJECTS_APP) $(RESOURCES)
 	-$(V_AT)mkdir -p $(JUCE_LIBDIR)
 	-$(V_AT)mkdir -p $(JUCE_OUTDIR)
 	$(V_AT)$(CXX) -o $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(OBJECTS_APP) $(JUCE_LDFLAGS) $(RESOURCES) $(TARGET_ARCH)
+
+$(JUCE_OBJDIR)/ObjectBroadcaster_6affa50.o: ../../Source/ObjectBroadcaster.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ObjectBroadcaster.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/LineSettingsState_c38e8efb.o: ../../Source/LineSettingsState.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)

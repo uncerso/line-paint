@@ -8,6 +8,7 @@
   ==============================================================================
 */
 
+//It does not "define". It seemed to you.
 #define CREATE_COLOUR_SELECTOR "C"
 #define REMOVE_COLOUR_SELECTOR "R"
 #define CHANGE_COLOUR_BUTTON "H"

@@ -226,6 +226,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\ObjectBroadcaster.cpp">
+      <Filter>line-paint\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\LineSettingsState.cpp">
       <Filter>line-paint\Source</Filter>
     </ClCompile>
@@ -1518,6 +1521,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\UnitTests.hpp">
+      <Filter>line-paint\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\ObjectBroadcaster.h">
       <Filter>line-paint\Source</Filter>
     </ClInclude>

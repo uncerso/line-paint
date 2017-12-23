@@ -23,6 +23,7 @@ void Memorize::handleDo(LineSettingsState const & fst, LineSettingsState const &
 	}
 	else{
 		auto y = snd.getPtr();
+		if (!y) return;
 		y->setPos(snd.getGlobalPosPoint1(), snd.getGlobalPosPoint2());
 		y->setLineThickness(snd.getLineThickness());
 		y->setLineType(snd.getType());
@@ -66,3 +67,53 @@ void Memorize::objectListenerCallback(char const & event) {
 	if (event == *UNDO) undo();
 	if (event == *REDO) redo();
 }
+
+class MemorizeTests
+	: public UnitTest
+{
+public:
+	MemorizeTests()
+		: UnitTest("undo/redo", "Memory")
+	{}
+
+	void undoTest() {
+		Memorize mem;
+		expect(mem.memory.empty(), "Failed init of the memory.");
+		expect(mem.undosMemory.empty(), "Failed init of the memory.");
+		mem.addIntoMemory(std::make_pair(LineSettingsState(true,nullptr),LineSettingsState(true,nullptr)));
+		expect(mem.undosMemory.empty(), "Failed adding into the memory.");
+		expectEquals((int)mem.memory.size(), 1, "Failed adding into the memory.");
+		mem.addIntoMemory(std::make_pair(LineSettingsState(true,nullptr),LineSettingsState(true,nullptr)));
+		expect(mem.undosMemory.empty(), "Failed adding into the memory.");
+		expectEquals((int)mem.memory.size(), 2, "Failed adding into the memory.");
+		mem.undo();
+		expectEquals((int)mem.undosMemory.size(),1, "Failed undo.");
+		expectEquals((int)mem.memory.size(), 1, "Failed undo.");
+		mem.undo();
+		expectEquals((int)mem.undosMemory.size(), 2, "Failed undo.");
+		expect(mem.memory.empty(), "Failed undo.");
+	}
+	void redoTest() {
+		Memorize mem;		
+		mem.addIntoMemory(std::make_pair(LineSettingsState(true,nullptr),LineSettingsState(true,nullptr)));
+		mem.addIntoMemory(std::make_pair(LineSettingsState(true,nullptr),LineSettingsState(true,nullptr)));
+		mem.undo();
+		mem.undo();
+		mem.redo();
+		expectEquals((int)mem.memory.size(), 1, "Failed redo.");
+		expectEquals((int)mem.undosMemory.size(),1, "Failed redo.");
+		mem.redo();
+		expect(mem.undosMemory.empty(), "Failed redo.");
+		expectEquals((int)mem.memory.size(), 2, "Failed redo.");
+	}
+
+	void runTest() override {
+		beginTest("undo");
+		undoTest();
+		beginTest("redo");		
+		redoTest();
+	}
+
+};
+
+static MemorizeTests MemorizeUnitTests; 

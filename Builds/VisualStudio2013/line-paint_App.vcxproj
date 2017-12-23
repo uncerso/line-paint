@@ -147,6 +147,7 @@
     <Lib/>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\ObjectBroadcaster.cpp"/>
     <ClCompile Include="..\..\Source\LineSettingsState.cpp"/>
     <ClCompile Include="..\..\Source\Memorize.cpp"/>
     <ClCompile Include="..\..\Source\ColourChangeButton.cpp"/>
@@ -1322,6 +1323,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_opengl.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\UnitTests.hpp"/>
     <ClInclude Include="..\..\Source\ObjectBroadcaster.h"/>
     <ClInclude Include="..\..\Source\LineSettingsState.h"/>
     <ClInclude Include="..\..\Source\Memorize.h"/>

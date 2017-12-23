@@ -6,6 +6,9 @@
               cppLanguageStandard="11" jucerVersion="5.2.0" companyCopyright="">
   <MAINGROUP id="UXiZKq" name="line-paint">
     <GROUP id="{D14DCCA0-72BC-817B-BBD7-37654A535D8D}" name="Source">
+      <FILE id="PDUXOd" name="ObjectBroadcaster.cpp" compile="1" resource="0"
+            file="Source/ObjectBroadcaster.cpp"/>
+      <FILE id="IWGZ0W" name="UnitTests.hpp" compile="0" resource="0" file="Source/UnitTests.hpp"/>
       <FILE id="RSCbHH" name="ObjectBroadcaster.h" compile="0" resource="0"
             file="Source/ObjectBroadcaster.h"/>
       <FILE id="K39Pv8" name="LineSettingsState.cpp" compile="1" resource="0"

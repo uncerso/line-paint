@@ -10,6 +10,7 @@
 
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "UnitTests.hpp"
 
 class CentralComponent;
 
@@ -27,5 +28,6 @@ private:
 #if JUCE_OPENGL
 	OpenGLContext openGLContext;
 #endif
+	UnitTestClasses::UnitTestsDemo *unit;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainForm);
 };

@@ -14,11 +14,13 @@
 #include "ObjectBroadcaster.h"
 
 class LineSettingsState;
+class MemorizeTests;
 
 class Memorize
 	: public ObjectBroadcaster<std::pair<LineSettingsState, LineSettingsState> >::ObjectListener
 	, public ObjectBroadcaster<char>::ObjectListener
 {
+	friend MemorizeTests;
 public:
 	void addIntoMemory(std::pair<LineSettingsState, LineSettingsState> const & event);
 private:
