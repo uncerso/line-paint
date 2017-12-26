@@ -10,6 +10,7 @@
 
 #include "Application.h"
 #include "MainForm.h"
+namespace line_paint{
 
 Application::Application()
 	: mainForm(nullptr)
@@ -37,4 +38,5 @@ const String Application::getApplicationVersion() {
 
 bool Application::moreThanOneInstanceAllowed() {
 	return true;
+}
 }

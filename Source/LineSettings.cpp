@@ -11,7 +11,8 @@
 #include "LineSettings.h"
 #include "LineComponent.h"
 #include "CentralComponent.h"
-#include "stringConstants.h"
+#include "CharConstants.h"
+namespace line_paint{
 
 LineSettings::LineSettings()
 	: Component("LineSettings")
@@ -87,7 +88,6 @@ LineSettings::LineSettings()
 
 LineSettings::~LineSettings() {
 	setLookAndFeel(nullptr);
-	//deleteAllChildren();
 }
 
 void LineSettings::paint(Graphics &canvas) {
@@ -95,7 +95,6 @@ void LineSettings::paint(Graphics &canvas) {
 }
 
 void LineSettings::resized() {
-	//double sk = getDesktopScaleFactor();
 	int sliderLeft = proportionOfWidth(0.1f);
 	int width = proportionOfWidth(0.8f);
 	laf.setFontSize(proportionOfHeight(0.02f));
@@ -122,7 +121,6 @@ void LineSettings::resized() {
 }
 
 void LineSettings::actionListenerCallback(const String &s) {
-	//jassert(s.size() == 1);
 	switch (s[0]) {
 	case changeColourButton: // change colourButton
 		if (LineComponent::selected)
@@ -273,4 +271,5 @@ void LineSettings::endChange() {
 	LineSettingsState endSettingChange(true, x, x->getLineThickness(), x->getLineType(), x->getColour(), x->getPoint1(), x->getPoint2(), x->getDashedValue1(), x->getDashedValue2());
 	if (startSettingChange != endSettingChange)
 		sendObjectMessage(std::make_pair(startSettingChange, endSettingChange));
+}
 }

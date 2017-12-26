@@ -10,6 +10,7 @@
 
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
+namespace line_paint{
 
 class LineSettings;
 
@@ -91,3 +92,4 @@ private:
 	static LineComponent *selected;
 	static LineSettings *lineSettings;
 };
+}

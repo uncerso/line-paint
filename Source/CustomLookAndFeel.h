@@ -10,6 +10,7 @@
 
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
+namespace line_paint{
 /// Almost same as LookAndFeel_V4, but with the ability to change
 /// font size
 class CustomLookAndFeel
@@ -29,3 +30,4 @@ public:
 private:
 	float fontSize = 15;
 };
+}

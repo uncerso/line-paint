@@ -9,9 +9,10 @@
 */
 
 #include "ColourChangeButton.h"
-#include "stringConstants.h"
+#include "CharConstants.h"
 #include <string>
-
+namespace line_paint{
+	
 ColourChangeButton::ColourChangeButton(const String &s)
 	: TextButton(s)
 {}
@@ -42,4 +43,5 @@ void ColourChangeButton::changeListenerCallback(ChangeBroadcaster* source) {
 
 void ColourChangeButton::deadOfColourSelector() const noexcept {
 	sendActionMessage(String((char *)&removeColourSelector));         // remove
+}
 }

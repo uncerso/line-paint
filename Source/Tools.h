@@ -14,6 +14,7 @@
 #include "CustomLookAndFeel.h"
 #include "ColourChangeButton.h"
 #include "ObjectBroadcaster.h"
+namespace line_paint{
 
 class CentralComponent;
 
@@ -52,3 +53,4 @@ private:
 	Label hotkeysLabelKeys;
 	Label hotkeysLabelInfo;
 };
+}

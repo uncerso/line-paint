@@ -10,6 +10,7 @@
 
 #include "CustomLookAndFeel.h"
 
+namespace line_paint{
 
 Font CustomLookAndFeel::getTextButtonFont(TextButton&, int buttonHeight) {
 	return Font(fontSize);
@@ -81,4 +82,5 @@ void CustomLookAndFeel::drawGroupComponentOutline(Graphics &g, int width, int he
 	           roundToInt(textW),
 	           roundToInt(textH),
 	           Justification::centred, true);
+}
 }

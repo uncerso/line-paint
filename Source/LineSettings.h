@@ -12,9 +12,10 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "CustomLookAndFeel.h"
 #include "ColourChangeButton.h"
-#include "stringConstants.h"
+#include "CharConstants.h"
 #include "LineSettingsState.h"
 #include "ObjectBroadcaster.h"
+namespace line_paint{
 
 class CustomSlider
 	: public Slider
@@ -96,3 +97,4 @@ private:
 	ColourChangeButton colourButton;
 
 };
+}

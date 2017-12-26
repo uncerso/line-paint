@@ -10,6 +10,7 @@
 
 #include "ObjectBroadcaster.h"
 #include "../JuceLibraryCode/JuceHeader.h"
+namespace line_paint{
 
 class ObjectBroadcasterTests
 	: public UnitTest
@@ -47,3 +48,4 @@ private:
 };
 
 static ObjectBroadcasterTests ObjectBroadcasterUnitTests; 
+}

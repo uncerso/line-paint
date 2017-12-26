@@ -10,6 +10,7 @@
 
 #include "LineComponent.h"
 #include "LineSettings.h"
+namespace line_paint{
 
 ComponentDragger LineComponent::dragger;
 ComponentBoundsConstrainer LineComponent::constrainer;
@@ -246,4 +247,5 @@ void LineComponent::setLineType(int type) {
 
 int LineComponent::getLineType() const noexcept {
 	return type;
+}
 }

@@ -1327,7 +1327,7 @@
     <ClInclude Include="..\..\Source\ObjectBroadcaster.h"/>
     <ClInclude Include="..\..\Source\LineSettingsState.h"/>
     <ClInclude Include="..\..\Source\Memorize.h"/>
-    <ClInclude Include="..\..\Source\stringConstants.h"/>
+    <ClInclude Include="..\..\Source\CharConstants.h"/>
     <ClInclude Include="..\..\Source\ColourChangeButton.h"/>
     <ClInclude Include="..\..\Source\CustomLookAndFeel.h"/>
     <ClInclude Include="..\..\Source\Tools.h"/>

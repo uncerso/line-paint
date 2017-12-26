@@ -17,8 +17,7 @@
             file="Source/LineSettingsState.h"/>
       <FILE id="Mvm93U" name="Memorize.cpp" compile="1" resource="0" file="Source/Memorize.cpp"/>
       <FILE id="K6gMCd" name="Memorize.h" compile="0" resource="0" file="Source/Memorize.h"/>
-      <FILE id="Q93tcz" name="stringConstants.h" compile="0" resource="0"
-            file="Source/stringConstants.h"/>
+      <FILE id="Q93tcz" name="CharConstants.h" compile="0" resource="0" file="Source/CharConstants.h"/>
       <FILE id="Iwh6mU" name="ColourChangeButton.cpp" compile="1" resource="0"
             file="Source/ColourChangeButton.cpp"/>
       <FILE id="WRiv8h" name="ColourChangeButton.h" compile="0" resource="0"

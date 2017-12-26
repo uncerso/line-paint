@@ -10,6 +10,7 @@
 
 #pragma once
 #include <list>
+namespace line_paint{
 
 ///
 template <class ... T>
@@ -47,4 +48,5 @@ void ObjectBroadcaster<T ...>::sendObjectMessage(T const & ... obj) {
 template <class ... T>
 void ObjectBroadcaster<T ...>::addObjectListener(ObjectListener * x) {
 	listeners.push_back(x);
+}
 }

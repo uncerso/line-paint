@@ -11,6 +11,7 @@
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "UnitTests.hpp"
+namespace line_paint{
 
 class CentralComponent;
 
@@ -31,3 +32,4 @@ private:
 	UnitTestClasses::UnitTestsDemo *unit;
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainForm);
 };
+}

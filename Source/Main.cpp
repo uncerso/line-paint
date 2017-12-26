@@ -9,5 +9,6 @@
 */
 
 #include "Application.h"
-
+namespace line_paint{
 START_JUCE_APPLICATION(Application)
+}

@@ -11,6 +11,7 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
+namespace line_paint{
 
 class MainForm;
 
@@ -36,3 +37,4 @@ public:
 private:
 	MainForm *mainForm;
 };
+}

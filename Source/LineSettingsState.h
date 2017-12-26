@@ -10,6 +10,7 @@
 
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
+namespace line_paint{
 class LineSettings;
 class LineComponent;
 
@@ -50,3 +51,4 @@ private:
 	unsigned int dashedValue1;
 	unsigned int dashedValue2;
 };
+}

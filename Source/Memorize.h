@@ -12,6 +12,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include <stack>
 #include "ObjectBroadcaster.h"
+namespace line_paint{
 
 class LineSettingsState;
 class MemorizeTests;
@@ -32,3 +33,4 @@ private:
 	std::stack<std::pair<LineSettingsState, LineSettingsState>*> memory;
 	std::stack<std::pair<LineSettingsState, LineSettingsState>*> undosMemory;
 };
+}

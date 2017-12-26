@@ -11,7 +11,8 @@
 #include "Tools.h"
 #include "LineComponent.h"
 #include "CentralComponent.h"
-#include "stringConstants.h"
+#include "CharConstants.h"
+namespace line_paint{
 
 Tools::Tools(Colour const &colour)
 	: Component("Tools")
@@ -50,7 +51,6 @@ Tools::Tools(Colour const &colour)
 
 Tools::~Tools() {
 	setLookAndFeel(nullptr);
-	//deleteAllChildren();
 }
 
 void Tools::paint(Graphics &canvas) {
@@ -86,11 +86,11 @@ void Tools::buttonClicked(Button *button) {
 }
 
 void Tools::undo() {
-	sendObjectMessage(::undo);
+	sendObjectMessage(line_paint::undo);
 }
 
 void Tools::redo() {
-	sendObjectMessage(::redo);
+	sendObjectMessage(line_paint::redo);
 }
 
 bool Tools::keyPressed(const KeyPress &key, Component *c) {
@@ -110,4 +110,5 @@ bool Tools::keyPressed(const KeyPress &key, Component *c) {
 		return true;
 	}
 	return false;
+}
 }

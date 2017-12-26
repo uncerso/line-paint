@@ -13,7 +13,8 @@
 #include "Tools.h"
 #include "LineSettings.h"
 #include "Memorize.h"
-#include "stringConstants.h"
+#include "CharConstants.h"
+namespace line_paint{
 
 CentralComponent::CentralComponent()
 	: Component("Central Component")
@@ -63,7 +64,7 @@ void CentralComponent::mouseDown(const MouseEvent &event) {
 }
 
 void CentralComponent::mouseDrag(const MouseEvent &event) {
-	if (event.mods == ModifierKeys::leftButtonModifier)
+	if (event.mods == ModifierKeys::leftButtonModifier && lastLine)
 		lastLine->mouseDrag(event);
 }
 
@@ -85,4 +86,5 @@ void CentralComponent::objectListenerCallback(char const & c){
 
 void CentralComponent::addIntoTheMemory(const std::pair<LineSettingsState, LineSettingsState> &event) {
 	memorize->addIntoMemory(event);
+}
 }

@@ -11,7 +11,8 @@
 #include "Memorize.h"
 #include "LineSettingsState.h"
 #include "LineComponent.h"
-#include "stringConstants.h"
+#include "CharConstants.h"
+namespace line_paint{
 
 void Memorize::handleDo(LineSettingsState const & fst, LineSettingsState const & snd) const {
 	if (!fst.isExist() && snd.isExist())
@@ -64,8 +65,8 @@ void Memorize::objectListenerCallback(std::pair<LineSettingsState, LineSettingsS
 }
 
 void Memorize::objectListenerCallback(char const & event) {
-	if (event == ::undo) undo();
-	if (event == ::redo) redo();
+	if (event == line_paint::undo) undo();
+	if (event == line_paint::redo) redo();
 }
 
 class MemorizeTests
@@ -117,3 +118,4 @@ public:
 };
 
 static MemorizeTests MemorizeUnitTests; 
+}

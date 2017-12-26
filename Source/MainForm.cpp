@@ -10,6 +10,7 @@
 
 #include "MainForm.h"
 #include "CentralComponent.h"
+namespace line_paint{
 
 MainForm::MainForm() : DocumentWindow(
 		JUCEApplication::getInstance()->getApplicationName(),
@@ -29,7 +30,6 @@ MainForm::MainForm() : DocumentWindow(
 	unit->setSize(DocumentWindow::getTopLevelWindow(0)->getParentWidth() * 0.3, DocumentWindow::getTopLevelWindow(0)->getParentHeight() * 0.5);
 	CallOutBox::launchAsynchronously(unit, getScreenBounds(), nullptr);
 
-	// setUsingNativeTitleBar(true);
 #if JUCE_OPENGL
 	openGLContext.attachTo(*getTopLevelComponent());
 #endif
@@ -39,4 +39,5 @@ MainForm::~MainForm() {}
 
 void MainForm::closeButtonPressed() {
 	JUCEApplication::getInstance()->systemRequestedQuit();
+}
 }

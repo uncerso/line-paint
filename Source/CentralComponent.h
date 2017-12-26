@@ -11,6 +11,7 @@
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "ObjectBroadcaster.h"
+namespace line_paint{
 
 class LineComponent;
 class Tools;
@@ -50,3 +51,4 @@ private:
 	LineComponent* lastLine;
 
 };
+}

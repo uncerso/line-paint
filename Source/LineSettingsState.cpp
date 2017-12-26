@@ -9,6 +9,7 @@
 */
 
 #include "LineSettingsState.h"
+namespace line_paint{
 
 //==============================================================================
 LineSettingsState::LineSettingsState(bool exist, LineComponent *ptr, int lineThickness, int type, Colour colour, Point<int> const &globalPosPoint1, Point<int> const &globalPosPoint2, unsigned int dashedValue1, unsigned int dashedValue2)
@@ -69,4 +70,5 @@ unsigned int LineSettingsState::getDashedValue1() const noexcept {
 
 unsigned int LineSettingsState::getDashedValue2() const noexcept {
 	return dashedValue2;
+}
 }

@@ -10,6 +10,7 @@
 
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
+namespace line_paint{
 
 /// Button to change colour
 class ColourChangeButton
@@ -44,3 +45,4 @@ public:
 	void deadOfColourSelector() const noexcept;
 
 };
+}

@@ -1533,7 +1533,7 @@
     <ClInclude Include="..\..\Source\Memorize.h">
       <Filter>line-paint\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\stringConstants.h">
+    <ClInclude Include="..\..\Source\CharConstants.h">
       <Filter>line-paint\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\ColourChangeButton.h">
