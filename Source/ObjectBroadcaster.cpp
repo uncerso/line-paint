@@ -11,6 +11,7 @@
 #include "ObjectBroadcaster.h"
 #include "../JuceLibraryCode/JuceHeader.h"
 namespace line_paint{
+#ifndef NDEBUG
 
 class ObjectBroadcasterTests
 	: public UnitTest
@@ -48,4 +49,5 @@ private:
 };
 
 static ObjectBroadcasterTests ObjectBroadcasterUnitTests; 
+#endif
 }

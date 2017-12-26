@@ -29,7 +29,9 @@ private:
 #if JUCE_OPENGL
 	OpenGLContext openGLContext;
 #endif
+#ifndef NDEBUG
 	UnitTestClasses::UnitTestsDemo *unit;
+#endif
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainForm);
 };
 }

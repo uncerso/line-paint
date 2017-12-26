@@ -10,9 +10,9 @@
 
 #pragma once
 
-
 #include "../JuceLibraryCode/JuceHeader.h"
 namespace line_paint{
+#ifndef NDEBUG
 
 struct UnitTestClasses{
 	class UnitTestsDemo;
@@ -185,4 +185,5 @@ private:
 	};
 
 };
+#endif
 }

@@ -69,6 +69,8 @@ void Memorize::objectListenerCallback(char const & event) {
 	if (event == line_paint::redo) redo();
 }
 
+#ifndef NDEBUG
+
 class MemorizeTests
 	: public UnitTest
 {
@@ -118,4 +120,5 @@ public:
 };
 
 static MemorizeTests MemorizeUnitTests; 
+#endif
 }
