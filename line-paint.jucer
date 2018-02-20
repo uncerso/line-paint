@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="TGuhzP" name="line-paint" displaySplashScreen="1" reportAppUsage="1"
+              splashScreenColour="Dark" projectType="guiapp" version="1.0.0"
+              bundleIdentifier="com.yourcompany.line-paint" includeBinaryInAppConfig="1"
+              cppLanguageStandard="11" jucerVersion="5.2.0" companyCopyright="">
+  <MAINGROUP id="UXiZKq" name="line-paint">
+    <GROUP id="{D14DCCA0-72BC-817B-BBD7-37654A535D8D}" name="Source">
+      <FILE id="PDUXOd" name="ObjectBroadcaster.cpp" compile="1" resource="0"
+            file="Source/ObjectBroadcaster.cpp"/>
+      <FILE id="IWGZ0W" name="UnitTests.hpp" compile="0" resource="0" file="Source/UnitTests.hpp"/>
+      <FILE id="RSCbHH" name="ObjectBroadcaster.h" compile="0" resource="0"
+            file="Source/ObjectBroadcaster.h"/>
+      <FILE id="K39Pv8" name="LineSettingsState.cpp" compile="1" resource="0"
+            file="Source/LineSettingsState.cpp"/>
+      <FILE id="ATXsFj" name="LineSettingsState.h" compile="0" resource="0"
+            file="Source/LineSettingsState.h"/>
+      <FILE id="Mvm93U" name="Memorize.cpp" compile="1" resource="0" file="Source/Memorize.cpp"/>
+      <FILE id="K6gMCd" name="Memorize.h" compile="0" resource="0" file="Source/Memorize.h"/>
+      <FILE id="Q93tcz" name="CharConstants.h" compile="0" resource="0" file="Source/CharConstants.h"/>
+      <FILE id="Iwh6mU" name="ColourChangeButton.cpp" compile="1" resource="0"
+            file="Source/ColourChangeButton.cpp"/>
+      <FILE id="WRiv8h" name="ColourChangeButton.h" compile="0" resource="0"
+            file="Source/ColourChangeButton.h"/>
+      <FILE id="vnA8hU" name="CustomLookAndFeel.cpp" compile="1" resource="0"
+            file="Source/CustomLookAndFeel.cpp"/>
+      <FILE id="wYaLcr" name="CustomLookAndFeel.h" compile="0" resource="0"
+            file="Source/CustomLookAndFeel.h"/>
+      <FILE id="RfcRlQ" name="Tools.cpp" compile="1" resource="0" file="Source/Tools.cpp"/>
+      <FILE id="G5jUGY" name="Tools.h" compile="0" resource="0" file="Source/Tools.h"/>
+      <FILE id="DEXLvB" name="LineComponent.cpp" compile="1" resource="0"
+            file="Source/LineComponent.cpp"/>
+      <FILE id="fZXMAh" name="LineComponent.h" compile="0" resource="0" file="Source/LineComponent.h"/>
+      <FILE id="Io2h32" name="LineSettings.cpp" compile="1" resource="0"
+            file="Source/LineSettings.cpp"/>
+      <FILE id="vye7dk" name="LineSettings.h" compile="0" resource="0" file="Source/LineSettings.h"/>
+      <FILE id="C5YOFA" name="Application.cpp" compile="1" resource="0" file="Source/Application.cpp"/>
+      <FILE id="WHarI9" name="Application.h" compile="0" resource="0" file="Source/Application.h"/>
+      <FILE id="G4nHAA" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+      <FILE id="M7i5hj" name="CentralComponent.cpp" compile="1" resource="0"
+            file="Source/CentralComponent.cpp"/>
+      <FILE id="BiQ4oU" name="CentralComponent.h" compile="0" resource="0"
+            file="Source/CentralComponent.h"/>
+      <FILE id="nbuxeQ" name="MainForm.cpp" compile="1" resource="0" file="Source/MainForm.cpp"/>
+      <FILE id="fCu8mK" name="MainForm.h" compile="0" resource="0" file="Source/MainForm.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <EXPORTFORMATS>
+    <VS2013 targetFolder="Builds/VisualStudio2013" windowsTargetPlatformVersion="8.1">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
+                       isDebug="1" optimisation="1" targetName="line_paint" debugInformationFormat="ProgramDatabase"
+                       enablePluginBinaryCopyStep="0"/>
+        <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
+                       isDebug="0" optimisation="3" targetName="line_paint" debugInformationFormat="ProgramDatabase"
+                       enablePluginBinaryCopyStep="0" linkTimeOptimisation="1"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../../JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2013>
+    <LINUX_MAKE targetFolder="Builds/LinuxMakefile">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="line_paint"/>
+        <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="line_paint"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../../JUCE/modules"/>
+      </MODULEPATHS>
+    </LINUX_MAKE>
+    <VS2015 targetFolder="Builds/VisualStudio2015" windowsTargetPlatformVersion="8.1">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
+                       debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"
+                       linkTimeOptimisation="0" isDebug="1" optimisation="1" targetName="line-paint"/>
+        <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
+                       debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"
+                       linkTimeOptimisation="1" isDebug="0" optimisation="3" targetName="line-paint"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_gui_extra" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../../JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2015>
+    <VS2017 targetFolder="Builds/VisualStudio2017">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
+                       debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"
+                       linkTimeOptimisation="0" isDebug="1" optimisation="1" targetName="line-paint"/>
+        <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
+                       debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"
+                       linkTimeOptimisation="1" isDebug="0" optimisation="3" targetName="line-paint"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_gui_extra" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../../JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2017>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+  <JUCEOPTIONS/>
+</JUCERPROJECT>
